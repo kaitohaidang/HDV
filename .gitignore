@@ -1,0 +1,17 @@
+# Java Spring Boot
+*.class
+*.jar
+*.war
+*.ear
+
+target/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+**/docker-build/
+
+# env file
+.env
