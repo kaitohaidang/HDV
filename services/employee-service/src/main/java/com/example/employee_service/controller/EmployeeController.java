@@ -24,8 +24,14 @@ public class EmployeeController {
         return employeeService.readEmployeeById(id);
     }
 
-    @GetMapping("/team/{teamId}")
+    @GetMapping("/teamId/{teamId}")
     public List<Employee> getEmployeeByTeamId(@PathVariable Integer teamId) {
         return employeeService.readListEmployeeByTeamId(teamId);
     }
+
+    @GetMapping("/managerId/{managerId}")
+    public List<Integer> getEmployeeByManagerId(@PathVariable Integer managerId) {
+        return employeeService.readListEmployeeIdByManagerId(managerId);
+    }
+
 }

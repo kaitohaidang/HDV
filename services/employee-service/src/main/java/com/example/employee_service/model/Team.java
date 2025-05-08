@@ -19,8 +19,7 @@ public class Team {
     public Team() {
     }
 
-    public Team(Integer id, String name, String detail, Integer managerId) {
-        this.id = id;
+    public Team(String name, String detail, Integer managerId) {
         this.name = name;
         this.detail = detail;
         this.managerId = managerId;
