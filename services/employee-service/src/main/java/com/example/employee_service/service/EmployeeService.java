@@ -29,4 +29,9 @@ public class EmployeeService {
     public List<Employee> readListEmployeeByTeamId(Integer teamId) {
         return employeeRepository.findByTeamId(teamId);
     }
+
+    // Read list Employee by Manager's id
+    public List<Integer> readListEmployeeIdByManagerId(Integer managerId) {
+        return employeeRepository.findAllByManagerId(managerId);
+    }
 }

@@ -32,9 +32,8 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Integer id, String name, String username, String password, LocalDate DOB,
+    public Employee(String name, String username, String password, LocalDate DOB,
                     String phoneNumber, String email, String address, Float salary, Integer teamId) {
-        this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
