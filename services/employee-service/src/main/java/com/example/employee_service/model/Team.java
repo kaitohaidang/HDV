@@ -3,17 +3,22 @@ package com.example.employee_service.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "team")
+@Table(name = "team", uniqueConstraints = {
+@UniqueConstraint(columnNames = {"name"})
+})
 public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false)
     private String detail;
 
+    @Column(nullable = false)
     private Integer managerId;
 
     public Team() {

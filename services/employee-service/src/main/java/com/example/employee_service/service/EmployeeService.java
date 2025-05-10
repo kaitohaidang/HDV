@@ -14,8 +14,15 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private RCToPasswordServiceService passwordClientService;
+
+    @Autowired
+    private RCToJWTServiceService jwtClientService;
+
     // Create new Employee
     public Employee createEmployee(Employee employee) {
+        employee.setPassword(passwordClientService.createPassword(employee.getPassword()));
         return employeeRepository.save(employee);
     }
 
@@ -23,6 +30,22 @@ public class EmployeeService {
     public Employee readEmployeeById(Integer id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         return employee.orElse(null);
+    }
+
+    // Read Employee by id
+    public String getJWT(String username, String password) {
+        Optional<Employee> employee = employeeRepository.findByUsername(username);
+
+        if(employee.isEmpty()) {
+            return null;
+        } else {
+            Employee e = employee.get();
+            if (!passwordClientService.checkPassword(password, e.getPassword())){
+                return null;
+            } else {
+                return jwtClientService.getJWT(e.getId(), e.getName());
+            }
+        }
     }
 
     // Read list Employee by id
