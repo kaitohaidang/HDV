@@ -1,0 +1,199 @@
+openapi: 3.0.0
+info:
+  title: Employee Service API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+    description: Local development server
+
+tags:
+  - name: Employee
+    description: Operations related to employees
+  - name: Team
+    description: Operations related to teams
+
+paths:
+  /employee:
+    post:
+      tags:
+        - Employee
+      summary: Create a new employee
+      operationId: createEmployee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          description: Employee created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+
+  /employee/{id}:
+    get:
+      tags:
+        - Employee
+      summary: Get employee by ID
+      operationId: getEmployeeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Employee found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+
+  /employee/teamId/{teamId}:
+    get:
+      tags:
+        - Employee
+      summary: Get employees by team ID
+      operationId: getEmployeesByTeamId
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+
+  /employee/managerId/{managerId}:
+    get:
+      tags:
+        - Employee
+      summary: Get employee IDs by manager ID
+      operationId: getEmployeeIdsByManagerId
+      parameters:
+        - name: managerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of employee IDs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+
+  /team:
+    post:
+      tags:
+        - Team
+      summary: Create a new team
+      operationId: createTeam
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      responses:
+        '200':
+          description: Team created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+
+  /team/{id}:
+    get:
+      tags:
+        - Team
+      summary: Get team by ID
+      operationId: getTeamById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Team found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+
+  /team/manager/{managerId}:
+    get:
+      tags:
+        - Team
+      summary: Get team by manager ID
+      operationId: getTeamByManagerId
+      parameters:
+        - name: managerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Team found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        DOB:
+          type: string
+          format: date
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        salary:
+          type: number
+          format: float
+        teamId:
+          type: integer
+        managerId:
+          type: integer
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        detail:
+          type: string
+        managerId:
+          type: integer

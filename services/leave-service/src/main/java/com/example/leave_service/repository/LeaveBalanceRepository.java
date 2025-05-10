@@ -13,12 +13,13 @@ import java.util.Optional;
 public interface LeaveBalanceRepository extends JpaRepository<LeaveBalance, Integer> {
 
     // Read Leave Balance having crateDate in this year by Employee's id
-    @Query("SELECT lb FROM LeaveBalance lb WHERE lb.employeeId = :employeeId AND YEAR(lb.createDate) = YEAR(CURRENT_DATE)")
+    @Query(value = "SELECT * FROM leave_balance lb WHERE lb.employee_id = :employeeId AND YEAR(lb.create_date) = YEAR(CURDATE())", nativeQuery = true)
     Optional<LeaveBalance> findCurrentYearLeaveBalanceByEmployeeId(@Param("employeeId") Integer employeeId);
 
     // Read balance of Leave Balance having crateDate in this year by Employee's id
-    @Query("SELECT lb.balance FROM LeaveBalance lb WHERE lb.employeeId = :employeeId AND YEAR(lb.createDate) = YEAR(CURRENT_DATE)")
+    @Query(value = "SELECT lb.balance FROM leave_balance lb WHERE lb.employee_id = :employeeId AND YEAR(lb.create_date) = YEAR(CURDATE())", nativeQuery = true)
     Optional<Integer> findCurrentYearBalanceByEmployeeId(@Param("employeeId") Integer employeeId);
+
 
     // Update balance of Leave Balance having crateDate in this year by Employee's id
     @Modifying

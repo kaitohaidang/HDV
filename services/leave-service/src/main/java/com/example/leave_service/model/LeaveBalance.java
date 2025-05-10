@@ -11,20 +11,23 @@ public class LeaveBalance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String detail;
 
     private LocalDate createDate;
 
+    @Column(nullable = false)
     private Integer balance;
 
+    @Column(nullable = false)
     private Integer employeeId;
 
     public LeaveBalance() {
     }
 
-    public LeaveBalance(String detail, LocalDate createDate, Integer balance, Integer employeeId) {
+    public LeaveBalance(String detail, Integer balance, Integer employeeId) {
         this.detail = detail;
-        this.createDate = createDate;
+        this.createDate = LocalDate.now();
         this.balance = balance;
         this.employeeId = employeeId;
     }

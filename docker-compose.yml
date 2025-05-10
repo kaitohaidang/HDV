@@ -1,12 +1,22 @@
-version: '3.8'
 services:
 
-#  gateway:
-#    build: ./gateway
-#    ports:
-#      - "8080:8000"
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - employee-service
+      - leave-service
+      - jwt-service
+      - password-service
+    networks:
+      - backend
 
-  employee_service_db:
+  employee-service-db:
     image: mysql:8
     container_name: employee_service_db
     restart: always
@@ -25,10 +35,11 @@ services:
       context: ./services/employee-service
       dockerfile: Dockerfile
     container_name: employee-service
+    restart: always
     ports:
       - "8081:8080"
     depends_on:
-      - employee_service_db
+      - employee-service-db
     environment:
       SPRING_DATASOURCE_URL: ${MYSQL_EMPLOYEE_SERVICE_DB_URL}
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USERNAME}
@@ -36,7 +47,7 @@ services:
     networks:
       - backend
 
-  leave_service_db:
+  leave-service-db:
     image: mysql:8
     container_name: leave_service_db
     restart: always
@@ -55,14 +66,40 @@ services:
       context: ./services/leave-service
       dockerfile: Dockerfile
     container_name: leave-service
+    restart: always
     ports:
       - "8082:8080"
     depends_on:
-      - leave_service_db
+      - leave-service-db
     environment:
       SPRING_DATASOURCE_URL: ${MYSQL_LEAVE_SERVICE_DB_URL}
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - backend
+
+  jwt-service:
+    build:
+      context: ./services/jwt-service
+      dockerfile: Dockerfile
+    container_name: jwt-service
+    restart: always
+    ports:
+      - "8083:8080"
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_EXPIRATION_TIME_BY_SECOND: ${JWT_EXPIRATION_TIME_BY_SECOND}
+    networks:
+      - backend
+
+  password-service:
+    build:
+      context: ./services/password-service
+      dockerfile: Dockerfile
+    container_name: password-service
+    restart: always
+    ports:
+      - "8084:8080"
     networks:
       - backend
 
@@ -72,3 +109,4 @@ volumes:
 
 networks:
   backend:
+    driver: bridge
