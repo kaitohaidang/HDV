@@ -18,16 +18,18 @@ public class Team {
     @Column(nullable = false)
     private String detail;
 
-    @Column(nullable = false)
-    private Integer managerId;
-
     public Team() {
     }
 
-    public Team(String name, String detail, Integer managerId) {
+    public Team(String name, String detail) {
         this.name = name;
         this.detail = detail;
-        this.managerId = managerId;
+    }
+
+    public Team(Integer id, String name, String detail) {
+        this.id = id;
+        this.name = name;
+        this.detail = detail;
     }
 
     public Integer getId() {
@@ -54,22 +56,12 @@ public class Team {
         this.detail = detail;
     }
 
-    public Integer getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Integer managerId) {
-        this.managerId = managerId;
-    }
-
     @Override
     public String toString() {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", detail='" + detail + '\'' +
-                ", managerId=" + managerId +
                 '}';
     }
-
 }

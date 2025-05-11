@@ -40,13 +40,19 @@ public class Employee {
     private Float salary;
 
     @Column(nullable = false)
+    private Boolean isManager;
+
+    @Column(nullable = false)
     private Integer teamId;
 
     public Employee() {
     }
 
-    public Employee(String name, String username, String password, LocalDate DOB,
-                    String phoneNumber, String email, String address, Float salary, Integer teamId) {
+    public Employee(
+            String name, String username, String password, LocalDate DOB,
+            String phoneNumber, String email, String address, Float salary,
+            Boolean isManager, Integer teamId
+    ) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -55,6 +61,25 @@ public class Employee {
         this.email = email;
         this.address = address;
         this.salary = salary;
+        this.isManager = isManager;
+        this.teamId = teamId;
+    }
+
+    public Employee(
+            Integer id, String name, String username, String password,
+            LocalDate DOB, String phoneNumber, String email,
+            String address, Float salary, Boolean isManager, Integer teamId
+    ) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.DOB = DOB;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.salary = salary;
+        this.isManager = isManager;
         this.teamId = teamId;
     }
 
@@ -138,6 +163,14 @@ public class Employee {
         this.teamId = teamId;
     }
 
+    public Boolean getManager() {
+        return isManager;
+    }
+
+    public void setManager(Boolean manager) {
+        isManager = manager;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -150,8 +183,8 @@ public class Employee {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", salary=" + salary +
+                ", isManager=" + isManager +
                 ", teamId=" + teamId +
                 '}';
     }
-
 }

@@ -32,6 +32,17 @@ public class LeaveBalance {
         this.employeeId = employeeId;
     }
 
+    public LeaveBalance(
+            Integer id, String detail, LocalDate createDate,
+            Integer balance, Integer employeeId
+    ) {
+        this.id = id;
+        this.detail = detail;
+        this.createDate = createDate;
+        this.balance = balance;
+        this.employeeId = employeeId;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -12,14 +12,13 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    // Read Employee by UserName
     Optional<Employee> findByUsername(String username);
 
-    // Read Employees by Team's id
-    List<Employee> findByTeamId(Integer teamId);
-
-    // Read all Employee's id by Manager's id
-    @Query("SELECT e.id FROM Employee e WHERE e.teamId IN (SELECT t.id FROM Team t WHERE t.managerId = :managerId)")
-    List<Integer> findAllByManagerId(@Param("managerId") Integer managerId);
-
+    @Query(value = """
+        SELECT e.id FROM employee e
+        WHERE e.teamId = (
+            SELECT teamId FROM employee WHERE id = :managerId
+        ) AND e.id != :managerId
+        """, nativeQuery = true)
+    List<Integer> findIdsByManagerId(@Param("managerId") Integer managerId);
 }

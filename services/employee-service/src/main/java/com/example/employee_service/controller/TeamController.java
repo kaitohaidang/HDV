@@ -13,17 +13,8 @@ public class TeamController {
     private TeamService teamService;
 
     @PostMapping
-    public Team createEmployee(@RequestBody Team team) {
+    public Team createTeam(@RequestBody Team team) {
         return teamService.createTeam(team);
     }
 
-    @GetMapping("/{id}")
-    public Team getEmployeeById(@PathVariable Integer id) {
-        return teamService.readTeamById(id);
-    }
-
-    @GetMapping("/manager/{managerId}")
-    public Team getEmployeeByTeamId(@PathVariable Integer managerId) {
-        return teamService.readTeamByManagerId(managerId);
-    }
 }
