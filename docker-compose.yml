@@ -78,6 +78,39 @@ services:
     networks:
       - backend
 
+  # New Approval Service
+  approval_service_db:
+    image: mysql:8
+    container_name: approval_service_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_APPROVAL_SERVICE_DB_NAME}
+    ports:
+      - "3309:3306"
+    volumes:
+      - approval_service_mysql-data:/var/lib/mysql
+    networks:
+      - backend
+
+  approval-service:
+    build:
+      context: ./services/approval-service
+      dockerfile: Dockerfile
+    container_name: approval-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - approval_service_db
+      - employee-service
+      - leave-service
+    environment:
+      SPRING_DATASOURCE_URL: ${MYSQL_APPROVAL_SERVICE_DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      EMPLOYEE_SERVICE_URL: http://employee-service:8080
+      LEAVE_SERVICE_URL: http://leave-service:8080
+      
   jwt-service:
     build:
       context: ./services/jwt-service
@@ -106,6 +139,7 @@ services:
 volumes:
   mysql-data:
   leave_service_mysql-data:
+  approval_service_mysql-data:
 
 networks:
   backend:

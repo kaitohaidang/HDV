@@ -1,0 +1,219 @@
+openapi: 3.0.0
+info:
+  title: Approval Service API
+  description: API for managing leave request approvals
+  version: 1.0.0
+servers:
+  - url: http://localhost:8083
+    description: Local development server
+paths:
+  /leave-request:
+    post:
+      summary: Submit a new leave request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaveRequestInput'
+      responses:
+        '201':
+          description: Leave request created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '400':
+          description: Bad request, employee does not have enough leave balance or other validation error
+  /leave-request/{id}:
+    get:
+      summary: Get a leave request by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Leave request found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '404':
+          description: Leave request not found
+  /leave-request/employee/{employeeId}:
+    get:
+      summary: Get all leave requests for an employee
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of leave requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveRequest'
+  /leave-request/manager/{managerId}:
+    get:
+      summary: Get all leave requests for a manager
+      parameters:
+        - name: managerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of leave requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveRequest'
+  /leave-request/manager/{managerId}/pending:
+    get:
+      summary: Get pending leave requests for a manager
+      parameters:
+        - name: managerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of pending leave requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveRequest'
+  /leave-request/{id}/approve:
+    put:
+      summary: Approve a leave request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: string
+      responses:
+        '200':
+          description: Leave request approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '400':
+          description: Bad request, leave request is not pending or not found
+  /leave-request/{id}/reject:
+    put:
+      summary: Reject a leave request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: string
+      responses:
+        '200':
+          description: Leave request rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaveRequest'
+        '400':
+          description: Bad request, leave request is not pending or not found
+components:
+  schemas:
+    LeaveRequestInput:
+      type: object
+      required:
+        - employeeId
+        - managerId
+        - startDate
+        - endDate
+        - leaveType
+        - reason
+      properties:
+        employeeId:
+          type: integer
+          description: ID of the employee requesting leave
+        managerId:
+          type: integer
+          description: ID of the manager who will approve the request
+        startDate:
+          type: string
+          format: date
+          description: Start date of the leave
+        endDate:
+          type: string
+          format: date
+          description: End date of the leave
+        leaveType:
+          type: string
+          description: Type of leave (e.g., sick, annual, personal)
+        reason:
+          type: string
+          description: Reason for the leave request
+    LeaveRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the leave request
+        employeeId:
+          type: integer
+          description: ID of the employee requesting leave
+        managerId:
+          type: integer
+          description: ID of the manager who will approve the request
+        requestDate:
+          type: string
+          format: date
+          description: Date when the request was submitted
+        startDate:
+          type: string
+          format: date
+          description: Start date of the leave
+        endDate:
+          type: string
+          format: date
+          description: End date of the leave
+        leaveType:
+          type: string
+          description: Type of leave (e.g., sick, annual, personal)
+        reason:
+          type: string
+          description: Reason for the leave request
+        status:
+          type: string
+          description: Status of the request (PENDING, APPROVED, REJECTED)
+        comments:
+          type: string
+          description: Comments from the manager (especially for rejections)
