@@ -1,9 +1,12 @@
 package com.example.leave_service.controller;
 
+import com.example.leave_service.dto.BalanceUpdateData;
 import com.example.leave_service.model.LeaveBalance;
 import com.example.leave_service.service.LeaveBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/leave")
@@ -14,6 +17,7 @@ public class LeaveBalanceController {
 
     @PostMapping
     public LeaveBalance createLeaveBalance(@RequestBody LeaveBalance leaveBalance) {
+        leaveBalance.setCreateDate(LocalDate.now());
         return leaveBalanceService.createLeaveBalance(leaveBalance);
     }
 
@@ -22,13 +26,17 @@ public class LeaveBalanceController {
         return leaveBalanceService.readCurrentYearLeaveBalanceLeaveBalanceByEmployeeId(employeeId);
     }
 
-    @PutMapping("/balance")
-    public Integer updateBalance(@RequestParam Integer employeeId, @RequestParam Integer newBalance) {
-        return leaveBalanceService.updateCurrentYearBalanceByEmployeeId(employeeId, newBalance);
+    @PostMapping("/balance")
+    public Integer updateBalance(@RequestBody BalanceUpdateData balanceUpdateData) {
+        return leaveBalanceService.updateCurrentYearBalanceByEmployeeId(
+                balanceUpdateData.getEmployeeId(),
+                balanceUpdateData.getNewBalance()
+        );
     }
 
     @GetMapping("/balance/employeeId/{employeeId}")
     public Integer readBalance(@PathVariable Integer employeeId) {
+        System.out.println(employeeId);
         return leaveBalanceService.readCurrentYearBalanceByEmployeeId(employeeId);
     }
 
