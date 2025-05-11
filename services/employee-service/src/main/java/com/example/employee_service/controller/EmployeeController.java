@@ -17,22 +17,14 @@ public class EmployeeController {
 
     @PostMapping("/register")
     public Employee register(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+        Employee newEmployee = employeeService.createEmployee(employee);
+        newEmployee.setPassword("password");
+        return newEmployee;
     }
 
     @PostMapping("/login")
     public String login(@RequestBody LoginData employee) {
         return employeeService.getJWT(employee.getUsername(), employee.getPassword());
-    }
-
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) {
-        return employeeService.readEmployeeById(id);
-    }
-
-    @GetMapping("/teamId/{teamId}")
-    public List<Employee> getEmployeeByTeamId(@PathVariable Integer teamId) {
-        return employeeService.readListEmployeeByTeamId(teamId);
     }
 
     @GetMapping("/managerId/{managerId}")

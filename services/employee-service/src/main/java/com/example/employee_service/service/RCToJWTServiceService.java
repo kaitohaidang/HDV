@@ -17,11 +17,11 @@ public class RCToJWTServiceService {
         this.jwtRestClient = jwtRestClient;
     }
 
-    public String getJWT(Integer id, String name) {
+    public String getJWT(Integer id, String name, Boolean isManager) {
         return jwtRestClient.post()
                 .uri("")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new JWTData(id, name, false))
+                .body(new JWTData(id, name, isManager))
                 .retrieve()
                 .body(String.class);
     }

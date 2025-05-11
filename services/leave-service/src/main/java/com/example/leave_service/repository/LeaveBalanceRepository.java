@@ -12,18 +12,26 @@ import java.util.Optional;
 @Repository
 public interface LeaveBalanceRepository extends JpaRepository<LeaveBalance, Integer> {
 
-    // Read Leave Balance having crateDate in this year by Employee's id
-    @Query(value = "SELECT * FROM leave_balance lb WHERE lb.employee_id = :employeeId AND YEAR(lb.create_date) = YEAR(CURDATE())", nativeQuery = true)
-    Optional<LeaveBalance> findCurrentYearLeaveBalanceByEmployeeId(@Param("employeeId") Integer employeeId);
+    @Query(value = """
+        SELECT lb.balance 
+        FROM leave_balance lb 
+        WHERE lb.employee_id = :employeeId 
+        AND YEAR(lb.create_date) = YEAR(CURDATE())
+        """, nativeQuery = true)
+    Optional<Integer> findCurrentYearBalanceByEmployeeId(
+            @Param("employeeId") Integer employeeId
+    );
 
-    // Read balance of Leave Balance having crateDate in this year by Employee's id
-    @Query(value = "SELECT lb.balance FROM leave_balance lb WHERE lb.employee_id = :employeeId AND YEAR(lb.create_date) = YEAR(CURDATE())", nativeQuery = true)
-    Optional<Integer> findCurrentYearBalanceByEmployeeId(@Param("employeeId") Integer employeeId);
-
-
-    // Update balance of Leave Balance having crateDate in this year by Employee's id
     @Modifying
-    @Query("UPDATE LeaveBalance lb SET lb.balance = :newBalance WHERE lb.employeeId = :employeeId AND YEAR(lb.createDate) = YEAR(CURRENT_DATE)")
-    int updateCurrentYearBalanceByEmployeeId(@Param("employeeId") Integer employeeId, @Param("newBalance") Integer newBalance);
+    @Query(value = """
+        UPDATE leave_balance
+        SET balance = :newBalance
+        WHERE employeeId = :employeeId
+        AND YEAR(create_date) = YEAR(CURRENT_DATE)
+        """, nativeQuery = true)
+    int updateLeaveBalanceThisYear(
+            @Param("employeeId") Integer employeeId,
+            @Param("newBalance") Integer newBalance
+    );
 
 }

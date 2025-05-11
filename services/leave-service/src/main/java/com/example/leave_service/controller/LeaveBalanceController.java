@@ -21,11 +21,6 @@ public class LeaveBalanceController {
         return leaveBalanceService.createLeaveBalance(leaveBalance);
     }
 
-    @GetMapping("/employeeId/{employeeId}")
-    public LeaveBalance readLeaveBalance(@PathVariable Integer employeeId) {
-        return leaveBalanceService.readCurrentYearLeaveBalanceLeaveBalanceByEmployeeId(employeeId);
-    }
-
     @PostMapping("/balance")
     public Integer updateBalance(@RequestBody BalanceUpdateData balanceUpdateData) {
         return leaveBalanceService.updateCurrentYearBalanceByEmployeeId(
