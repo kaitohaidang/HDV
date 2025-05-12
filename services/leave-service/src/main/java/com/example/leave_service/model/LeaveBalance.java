@@ -14,22 +14,15 @@ public class LeaveBalance {
     @Column(nullable = false)
     private String detail;
 
-    private LocalDate createDate;
+    private LocalDate create_date;
 
     @Column(nullable = false)
     private Integer balance;
 
     @Column(nullable = false)
-    private Integer employeeId;
+    private Integer employee_id;
 
     public LeaveBalance() {
-    }
-
-    public LeaveBalance(String detail, Integer balance, Integer employeeId) {
-        this.detail = detail;
-        this.createDate = LocalDate.now();
-        this.balance = balance;
-        this.employeeId = employeeId;
     }
 
     public LeaveBalance(
@@ -38,9 +31,9 @@ public class LeaveBalance {
     ) {
         this.id = id;
         this.detail = detail;
-        this.createDate = createDate;
+        this.create_date = createDate;
         this.balance = balance;
-        this.employeeId = employeeId;
+        this.employee_id = employeeId;
     }
 
     public Integer getId() {
@@ -60,11 +53,11 @@ public class LeaveBalance {
     }
 
     public LocalDate getCreateDate() {
-        return createDate;
+        return create_date;
     }
 
     public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
+        this.create_date = createDate;
     }
 
     public Integer getBalance() {
@@ -76,11 +69,11 @@ public class LeaveBalance {
     }
 
     public Integer getEmployeeId() {
-        return employeeId;
+        return employee_id;
     }
 
     public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+        this.employee_id = employeeId;
     }
 
     @Override
@@ -88,9 +81,9 @@ public class LeaveBalance {
         return "LeaveBalance{" +
                 "id=" + id +
                 ", detail='" + detail + '\'' +
-                ", createDate=" + createDate +
+                ", create_date=" + create_date +
                 ", balance=" + balance +
-                ", employeeId=" + employeeId +
+                ", employeeId=" + employee_id +
                 '}';
     }
 

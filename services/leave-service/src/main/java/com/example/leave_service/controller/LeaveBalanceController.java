@@ -23,15 +23,15 @@ public class LeaveBalanceController {
 
     @PostMapping("/balance")
     public Integer updateBalance(@RequestBody BalanceUpdateData balanceUpdateData) {
+        System.out.println(balanceUpdateData);
         return leaveBalanceService.updateCurrentYearBalanceByEmployeeId(
-                balanceUpdateData.getEmployeeId(),
-                balanceUpdateData.getNewBalance()
+                balanceUpdateData.getEmployee_id(),
+                balanceUpdateData.getNew_balance()
         );
     }
 
     @GetMapping("/balance/employeeId/{employeeId}")
     public Integer readBalance(@PathVariable Integer employeeId) {
-        System.out.println(employeeId);
         return leaveBalanceService.readCurrentYearBalanceByEmployeeId(employeeId);
     }
 

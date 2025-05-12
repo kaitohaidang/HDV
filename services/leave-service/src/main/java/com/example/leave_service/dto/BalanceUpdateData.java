@@ -2,38 +2,39 @@ package com.example.leave_service.dto;
 
 public class BalanceUpdateData {
 
-    private Integer employeeId;
+    private Integer employee_id;
 
-    private Integer newBalance;
+    private Integer new_balance;
 
-    public BalanceUpdateData() {}
-
-    public BalanceUpdateData(Integer employeeId, Integer newBalance) {
-        this.employeeId = employeeId;
-        this.newBalance = newBalance;
+    public BalanceUpdateData() {
     }
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public BalanceUpdateData(Integer employee_id, Integer new_balance) {
+        this.employee_id = employee_id;
+        this.new_balance = new_balance;
     }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public Integer getEmployee_id() {
+        return employee_id;
     }
 
-    public Integer getNewBalance() {
-        return newBalance;
+    public void setEmployee_id(Integer employee_id) {
+        this.employee_id = employee_id;
     }
 
-    public void setNewBalance(Integer newBalance) {
-        this.newBalance = newBalance;
+    public Integer getNew_balance() {
+        return new_balance;
+    }
+
+    public void setNew_balance(Integer new_balance) {
+        this.new_balance = new_balance;
     }
 
     @Override
     public String toString() {
         return "BalanceUpdateData{" +
-                "employeeId=" + employeeId +
-                ", newBalance=" + newBalance +
+                "employee_id=" + employee_id +
+                ", new_balance=" + new_balance +
                 '}';
     }
 }

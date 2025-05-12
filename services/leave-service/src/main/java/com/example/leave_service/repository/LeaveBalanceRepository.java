@@ -1,6 +1,7 @@
 package com.example.leave_service.repository;
 
 import com.example.leave_service.model.LeaveBalance;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,11 +23,12 @@ public interface LeaveBalanceRepository extends JpaRepository<LeaveBalance, Inte
             @Param("employeeId") Integer employeeId
     );
 
+    @Transactional
     @Modifying
     @Query(value = """
         UPDATE leave_balance
         SET balance = :newBalance
-        WHERE employeeId = :employeeId
+        WHERE employee_id = :employeeId
         AND YEAR(create_date) = YEAR(CURRENT_DATE)
         """, nativeQuery = true)
     int updateLeaveBalanceThisYear(

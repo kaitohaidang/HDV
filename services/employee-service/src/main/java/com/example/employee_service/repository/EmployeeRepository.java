@@ -16,8 +16,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query(value = """
         SELECT e.id FROM employee e
-        WHERE e.teamId = (
-            SELECT teamId FROM employee WHERE id = :managerId
+        WHERE e.team_id = (
+            SELECT team_id FROM employee WHERE id = :managerId
         ) AND e.id != :managerId
         """, nativeQuery = true)
     List<Integer> findIdsByManagerId(@Param("managerId") Integer managerId);

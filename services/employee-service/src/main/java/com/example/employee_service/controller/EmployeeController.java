@@ -19,6 +19,7 @@ public class EmployeeController {
     public Employee register(@RequestBody Employee employee) {
         Employee newEmployee = employeeService.createEmployee(employee);
         newEmployee.setPassword("password");
+        System.out.println(newEmployee.getIs_manager());
         return newEmployee;
     }
 

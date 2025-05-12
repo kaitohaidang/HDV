@@ -22,6 +22,7 @@ public class LeaveBalanceService {
 
     @Transactional
     public Integer updateCurrentYearBalanceByEmployeeId(Integer employeeId, Integer newBalance) {
+        System.out.println(employeeId + " " + newBalance);
         return leaveBalanceRepository.updateLeaveBalanceThisYear(employeeId, newBalance);
     }
 }

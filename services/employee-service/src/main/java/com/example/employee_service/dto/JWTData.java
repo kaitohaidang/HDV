@@ -6,7 +6,7 @@ public class JWTData {
 
     private String name;
 
-    private Boolean isManager;
+    private Boolean is_manager;
 
     public JWTData() {
     }
@@ -14,7 +14,7 @@ public class JWTData {
     public JWTData(Integer id, String name, Boolean isManager) {
         this.id = id;
         this.name = name;
-        this.isManager = isManager;
+        this.is_manager = isManager;
     }
 
     public Integer getId() {
@@ -34,11 +34,11 @@ public class JWTData {
     }
 
     public Boolean getManager() {
-        return isManager;
+        return is_manager;
     }
 
     public void setManager(Boolean manager) {
-        isManager = manager;
+        is_manager = manager;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JWTData {
         return "JWTData{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", isManager=" + isManager +
+                ", is_manager=" + is_manager +
                 '}';
     }
 }
