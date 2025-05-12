@@ -22,6 +22,7 @@ public class EmployeeService {
 
     public Employee createEmployee(Employee employee) {
         employee.setPassword(passwordClientService.createPassword(employee.getPassword()));
+        System.out.println(employee.getIs_manager());
         return employeeRepository.save(employee);
     }
 
@@ -35,7 +36,7 @@ public class EmployeeService {
             if (!passwordClientService.checkPassword(password, e.getPassword())){
                 return null;
             } else {
-                return jwtClientService.getJWT(e.getId(), e.getName(), e.getManager());
+                return jwtClientService.getJWT(e.getId(), e.getName(), e.getIs_manager());
             }
         }
     }

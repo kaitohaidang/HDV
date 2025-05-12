@@ -1,20 +1,20 @@
 services:
 
-  gateway:
-    build:
-      context: ./gateway
-      dockerfile: Dockerfile
-    container_name: gateway
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - employee-service
-      - leave-service
-      - jwt-service
-      - password-service
-    networks:
-      - backend
+#  gateway:
+#    build:
+#      context: ./gateway
+#      dockerfile: Dockerfile
+#    container_name: gateway
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - employee-service
+#      - leave-service
+#      - jwt-service
+#      - password-service
+#    networks:
+#      - backend
 
   employee-service-db:
     image: mysql:8
@@ -109,7 +109,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       EMPLOYEE_SERVICE_URL: http://employee-service:8080
       LEAVE_SERVICE_URL: http://leave-service:8080
-      
+
   jwt-service:
     build:
       context: ./services/jwt-service
@@ -138,7 +138,7 @@ services:
 volumes:
   employee_service_mysql-data:
   leave_service_mysql-data:
-  approval_service_mysql-data:
+#  approval_service_mysql-data:
 
 networks:
   backend:
